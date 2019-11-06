@@ -1,11 +1,18 @@
 version: 2.1
 jobs: 
   build: 
-    working_directory: ~/circleci-codeclimate
+    environment: 
+      CC_TEST_REPORTER_ID: $CODECLIMATE_TEST_REPORTER_ID
+    working_directory: ~/repo
     docker:
       - image: circleci/node:12.13.0
     steps:
       - checkout
+
+      # Update npm
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
 
       # Download and cache dependencies
       - restore_cache:
@@ -13,6 +20,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+
       - run:
           name: Install dependencies
           command: npm install
@@ -25,15 +33,31 @@ jobs:
       - run:    
           name: Run tests
           command: npm test
+          when: always
+      
       - run:
           name: Generate coverage report
           command: npm run cover
+          when: always
 
-      - store_artifacts: # Save tests results as artifacts
-          path: test-results.xml
-          prefix: tests
+      - run: 
+          name: Set up codeclimate test reporter
+          command: | 
+          # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+          when: always
+
+      - run:
+          name: Send coverage report to codeclimate
+          command: |
+            # nyc report requires that nyc has already been run,
+            # which creates the .nyc_output folder containing necessary data
+            # ./node_modules/.bin/nyc report --reporter=text-lcov > coverage/lcov.info
+            ./cc-test-reporter after-build -t lcov
+          when: always
 
       - store_artifacts: # Save coverage reports as artifacts
-          path: coverage
+          path: ./coverage/lcov.info
           prefix: coverage
         
