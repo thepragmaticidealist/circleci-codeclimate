@@ -1,8 +1,8 @@
+# https://circleci.com/docs/2.0/collect-test-data/
+# https://github.com/codeclimate/test-reporter/issues/342
 version: 2
 jobs:
     build:
-        # environment:
-        #     CC_TEST_REPORTER_ID: $Cc_TEST_REPORTER_ID
         docker:
             - image: circleci/node:12.13.0
         working_directory: ~/repo
