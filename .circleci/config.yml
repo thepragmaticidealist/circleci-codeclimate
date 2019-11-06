@@ -37,15 +37,17 @@ jobs:
       
       - run:
           name: Generate coverage report
+          #  Generates lcov report in ./coverage
           command: npm run cover
           when: always
 
       - run: 
           name: Set up codeclimate test reporter
           command: | 
-          # download test reporter as a static binary
+            # download test reporter as a static binary
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
           when: always
 
       - run:
