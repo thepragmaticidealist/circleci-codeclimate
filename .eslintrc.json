@@ -12,25 +12,25 @@
     },
     "rules": {
         "eqeqeq": [
-            "off"
+            0
         ],
         "indent": [
-            "error",
+            2,
             2
         ],
         "linebreak-style": [
-            "error",
+            2,
             "unix"
         ],
         "prefer-arrow-callback": [
-            "off"
+            0
         ],
         "quotes": [
-            "error",
+            2,
             "single"
         ],
         "semi": [
-            "error",
+            2,
             "always"
         ]
     }
