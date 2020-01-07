@@ -2,9 +2,4 @@
 
 
 # circleci-codeclimate
-Accompanying repository for the Integrating Code Climate testing with Circle CI article
-
-
-Links https://docs.codeclimate.com/docs/github-pull-requests
-https://docs.codeclimate.com/docs/workflow
-https://docs.codeclimate.com/docs/github-pull-requests#section-inline-issue-comments
+Accompanying repository for the Integrating Code Climate testing with Circle CI article on the CircleCI blog.
