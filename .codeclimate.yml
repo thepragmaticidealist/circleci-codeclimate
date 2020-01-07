@@ -3,5 +3,5 @@ plugins:
     enabled: true
     channel: "eslint-5"
     config:
-    extensions:
-    - .js
+      extensions:
+      - .js
